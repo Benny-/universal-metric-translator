@@ -61,6 +61,10 @@ var replaceSubstring = function(originalText, index, length, replacement) {
     return before_substring + replacement + after_substring;
 };
 
+function round_number(num, dec) {
+    return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
+}
+
 // The transformText function is idempotent.
 // Repeated calls on the output will do nothing. Only the first invocation has any effect.
 // The input will be returned on repeated calls.
@@ -73,7 +77,7 @@ var transformText = function(text) {
             match = transformationRule.regex.exec(text);
             if(match)
             {
-               var new_value = parseFloat(match[0]) * transformationRule.conversation;
+               var new_value = round_number(parseFloat(match[0]) * transformationRule.conversation, 2);
                var new_unit = transformationRule.to;
                var new_substring = "" + new_value + " " + new_unit;
                
