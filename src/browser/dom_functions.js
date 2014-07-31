@@ -30,7 +30,6 @@ var walk = function(node) {
 
 var MutationObserver = (window.MutationObserver || window.WebKitMutationObserver);
 var observer = new MutationObserver(function (mutations) {
-    console.log("Mutation for occured", mutations)
     mutations.forEach(function (mutation) {
         if(mutation.type == 'childList') {
             for (var i = 0; i < mutation.addedNodes.length; ++i) {
