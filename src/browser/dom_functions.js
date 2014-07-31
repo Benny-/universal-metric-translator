@@ -36,6 +36,8 @@ var observer = new MutationObserver(function (mutations) {
             for (var i = 0; i < mutation.addedNodes.length; ++i) {
                walk(mutation.addedNodes[i]);
             }
+        } else if (mutation.type == 'characterData') {
+            handleTextNode(mutation.target);
         }
     });
 });
