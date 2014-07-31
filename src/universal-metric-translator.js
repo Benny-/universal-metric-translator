@@ -1,8 +1,8 @@
 
-//  \d+(\.\d+)?\s+word
+//  \b\d+(\.\d+)?\s+unit\b
 // Flags: global, insensitive
 var createTransformationRegEx = function(unit) {
-    return new RegExp("\\d+(\\.\\d+)?\\s*" + unit, "gi");
+    return new RegExp('\\b\\d+(\\.\\d+)?\\s*' + unit + '\\b', "gi");
 };
 
 // Sources:
