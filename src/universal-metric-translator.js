@@ -97,7 +97,7 @@ var tranformationTable = [
     
     // Volume
     {
-        from: '(fluid ounce|fl oz)',
+        from: '(fluid ounces?|fl oz)',
         to: 'ml',
         conversation: 28.4130625,
     },
@@ -134,7 +134,7 @@ var tranformationTable = [
         conversation: 1.7718451953125,
     },
     {
-        from: 'ounces?',
+        from: '(ounces?|oz)',
         to: 'g',
         conversation: 28.349523125,
     },
