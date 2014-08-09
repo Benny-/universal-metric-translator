@@ -5,6 +5,6 @@
 // @include     about:addons
 // @include     http*
 // @include     https*
-// @version     1.2.0
+// @version     1.3.0
 // @grant       none
 // ==/UserScript==
