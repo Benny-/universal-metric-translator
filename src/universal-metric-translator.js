@@ -161,11 +161,11 @@ var tranformationTable = [
     //  A 'ton' might belong here, but there exist a metric ton and a imperial ton.
     
     // Currency
-    {
-        from: 'dollars?',
-        to: '€',
-        conversation: 0.75, // NOTE: This conversation depends on exchange rates. It will vary over time.
-    },
+//    {
+//        from: 'dollars?',
+//        to: '€',
+//        conversation: 0.75, // NOTE: This conversation depends on exchange rates. It will vary over time.
+//    },
 ];
 
 tranformationTable.forEach(function (transformationRule) {
