@@ -12,6 +12,15 @@ var createTransformationRegEx = function(unit) {
 // https://en.wikipedia.org/wiki/Litre
 var tranformationTable = [
     
+    // Temperature
+    {
+        from: '(F|fahrenheit|fahrenheits|degrees F|degrees fahrenheit)',
+        to: '℃',
+        conversation: function(fahrenheits){
+            return ((fahrenheits - 32) / 1.8).toFixed(2);
+        }
+    },
+    
     // Distance
     {
         from: 'thou',
@@ -194,15 +203,26 @@ var transformText = function(text) {
             match = transformationRule.regex.exec(text);
             if(match)
             {
-               var new_value = round_number(parseFloat(match[0]) * transformationRule.conversation, 2);
-               var new_unit = transformationRule.to;
-               var new_substring = "" + new_value + " " + new_unit;
-               
-               text = replaceSubstring(text, match.index, match[0].length, new_substring );
-               
-               // Move the matching index past whatever we have replaced.
-               // Note: The replacement can be shorter or longer.
-               transformationRule.regex.lastIndex = transformationRule.regex.lastIndex + (new_substring.length - match[0].length);
+                var old_value = round_number(parseFloat(match[0]), 2)
+                var new_value;
+                
+                if(typeof transformationRule.conversation == 'function')
+                {
+                    new_value = transformationRule.conversation(old_value);
+                }
+                else
+                {
+                    new_value = old_value * transformationRule.conversation;
+                }
+                
+                var new_unit = transformationRule.to;
+                var new_substring = "" + new_value + " " + new_unit;
+
+                text = replaceSubstring(text, match.index, match[0].length, new_substring );
+
+                // Move the matching index past whatever we have replaced.
+                // Note: The replacement can be shorter or longer.
+                transformationRule.regex.lastIndex = transformationRule.regex.lastIndex + (new_substring.length - match[0].length);
             }
         } while(match);
     });
