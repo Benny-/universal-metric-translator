@@ -195,22 +195,27 @@ var transformText = function(text) {
             // if the number is written like 1 1/4 instead of 1.25 then:
             if(/\//.test(match[1])) {
                 old_value = match[1].split(' ')
-                if(old_value.length == 2) {
+                if(old_value.length == 2)
+                {
                     var a = old_value[1].split('/')
                     old_value[1] = parseFloat(a[0].replace(/,/g, ''), 10) / parseFloat(a[1].replace(/,/g, ''), 10)
                     old_value = parseFloat(old_value[0].replace(/,/g, ''), 10) + old_value[1]
-                } else
-                    old_value = parseFloat(old_value[0].replace(/,/g, ''), 10)
+                }
+                else
+                {
+                    var a = old_value[0].split('/')
+                    old_value = parseFloat(a[0].replace(/,/g, ''), 10) / parseFloat(a[1].replace(/,/g, ''), 10)
+                }
             } else {
                 old_value = parseFloat(match[1].replace(/,/g, ''), 10)
             }
-
+            
             if(typeof transformationRule.convert == 'function') {
                 new_value = transformationRule.convert(old_value);
             } else {
                 new_value = old_value * transformationRule.convert;
             }
-
+            
             var new_unit = transformationRule.to;
             if(new_unit === 'g' || new_unit === 'L' || new_unit === 'm')
             {
