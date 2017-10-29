@@ -4,8 +4,7 @@
 // @description Automatically converts imperial units to metric units
 // @license     BSD-3-Clause
 // @include     about:addons
-// @include     http*
-// @include     https*
-// @version     2.1.2
+// @include     *
+// @version     2.1.3
 // @grant       none
 // ==/UserScript==

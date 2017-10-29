@@ -1,12 +1,12 @@
 
-var handleTextNode = function(textNode) {
+const handleTextNode = (textNode) => {
     var transformedText = transformText(textNode.nodeValue);
     if(textNode.nodeValue != transformedText)
        textNode.nodeValue = transformedText;
 };
 
 // Travel the node(s) in a recursive fashion.
-var walk = function(node) {
+const walk = (node) => {
   var child, next;
 
   switch (node.nodeType) {
@@ -28,9 +28,9 @@ var walk = function(node) {
   }
 };
 
-var MutationObserver = (window.MutationObserver || window.WebKitMutationObserver);
-var observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
+const MutationObserver = (window.MutationObserver || window.WebKitMutationObserver);
+var observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
         if(mutation.type == 'childList') {
             for (var i = 0; i < mutation.addedNodes.length; ++i) {
                walk(mutation.addedNodes[i]);

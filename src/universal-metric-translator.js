@@ -32,27 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 // Flags: global, insensitive
-var createTransformationRegEx = function(unit) {
-    return new RegExp(
-        '\\s?'
-
-      + '((?:\\d+(?:,\\d+)*)(?:\\.\\d+)?' // eg 9.23 or 23 or 0.34 or 2,204.6
-      + '|\\d*(?:\\.\\d+)'  // eg .34 but not 0.34
-      + '|(?:\\d+(?:,\\d+)*\\s)?\\d+(?:,\\d+)*/\\d+(?:,\\d+)*)' // 1 1/2 or 1/4, common with imperial
-
-      + '(?:\\s*' + unit
-      + '\\b(?!(\\s\\[|\\]))' // prevent infinite replacement
-      // + '|\(?=\\s*(?:to|and|-)[\\d\\./\\s]+' + unit + '\\b)'
-      + ')'
-     ,"gi");
-};
+const createTransformationRegEx = (unit) => new RegExp(`(?:^|\\s)((\\d\\s)?[0-9]+(?:\\.[0-9]+)?(?:/[0-9]+(?:\\.[0-9]+)?)?)\\s*(${unit})\\b(?!(\\s\\[))`,"i");
 
 // Sources:
 // https://en.wikipedia.org/wiki/Imperial_units
 // https://en.wikipedia.org/wiki/Metre
 // https://en.wikipedia.org/wiki/Square_metre
 // https://en.wikipedia.org/wiki/Litre
-var tranformationTable = [
+const tranformationTable = [
 
     // Temperature
     {
@@ -203,21 +190,21 @@ tranformationTable.forEach(function (transformationRule) {
     transformationRule.regex = createTransformationRegEx(transformationRule.from);
 });
 
-var replaceSubstring = function(originalText, index, length, replacement) {
+const replaceSubstring = function(originalText, index, length, replacement) {
     var before_substring = originalText.substring(0, index);
     var after_substring = originalText.substring(index+length);
     return before_substring + replacement + after_substring;
 };
 
-function round_number(num, dec) {
+const round_number = (num, dec) => {
     return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
 }
 
 // The transformText function is idempotent.
 // Repeated calls on the output will do nothing. Only the first invocation has any effect.
 // The input will be returned on repeated calls.
-var transformText = function(text) {
-    tranformationTable.forEach(function (transformationRule) {
+const transformText = (text) => {
+    tranformationTable.forEach((transformationRule) => {
        transformationRule.regex.lastIndex = 0;
         for(var match; match = transformationRule.regex.exec(text);) {
 
